@@ -1,0 +1,102 @@
+/* 🔥 Estilização Padrão dos Modais */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 🔥 Caixa do modal */
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: left;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  width: 420px;
+}
+
+/* 🔥 Ajustes específicos para Novo Agendamento */
+.modal-content label {
+  font-size: 14px;
+  font-weight: bold;
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+/* 🔥 Estilização das opções de serviço */
+.service-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  background: #f8f8f8;
+  border-radius: 5px;
+}
+
+.service-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+/* 🔥 Ajuste no input de data */
+.date-input {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  background: #f8f8f8;
+  outline: none;
+  transition: border 0.3s;
+}
+
+.date-input:focus {
+  border-color: #620C18;
+}
+
+/* 🔥 Ajuste nos botões dentro do modal */
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+  gap: 10px;
+}
+
+.modal-actions .btn {
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: 0.3s ease;
+  border: none;
+  width: 48%;
+  text-align: center;
+}
+
+.modal-actions .btn-success {
+  background-color: #28a745;
+  color: white;
+}
+
+.modal-actions .btn-success:hover {
+  background-color: #218838;
+}
+
+.modal-actions .btn-error {
+  background-color: #e63946;
+  color: white;
+}
+
+.modal-actions .btn-error:hover {
+  background-color: #c62828;
+}

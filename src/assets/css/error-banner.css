@@ -1,0 +1,37 @@
+.error-banner {
+  position: fixed;
+  top: 10px; 
+  left: 50%; 
+  transform: translateX(-50%);
+  background-color: #e63946;
+  color: white;
+  padding: 12px;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
+  display: flex;
+  z-index: 99999; 
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+.error-banner::before {
+  content: "⚠";
+  font-size: 16px;
+}
+
+/* 🔥 Animação */
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translate(-50%, -10px); 
+  }
+  to {
+      opacity: 1;
+      transform: translate(-50%, 0); 
+  }
+}

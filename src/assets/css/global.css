@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+}
+
+/* Fundo da página */
+body {
+  background: linear-gradient(to bottom, #620C18 50%, #E0DCD9 50%);
+  min-height: 100vh;
+  color: #4A4A4A;
+}
+
+/* Centralização flexível */
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Nome do salão */
+.salon-name {
+  font-family: "Playfair Display", serif;
+  position: absolute;
+  text-transform: none;
+  top: 30px;
+  font-size: 40px;
+  font-weight: bold;
+  color:white;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* ============================== */
+/*        BOTÕES GLOBAIS         */
+/* ============================== */
+
+/* Estilo base para todos os botões */
+.btn {
+  display: inline-block;
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: 0.3s ease-in-out;
+}
+
+/* Botão Primário */
+.btn-primary {
+  background-color: #620C18;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #500A14;
+}
+
+/* Botão Secundário */
+.btn-secondary {
+  background-color: #C6AD95;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #A58C74;
+}
+
+/* Botão de Erro */
+.btn-error {
+  background-color: #E63946;
+  color: white;
+}
+
+.btn-error:hover {
+  background-color: #C62828;
+}
+
+/* Botão Desabilitado */
+.btn-disabled {
+  background-color: #CCCCCC;
+  color: #666666;
+  cursor: not-allowed;
+}
