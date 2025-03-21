@@ -58,12 +58,14 @@ export default {
       errorMessage: "",
       passwordStrengthText: "", 
       passwordStrengthClass: "", 
+      score: 0,
     };
   },
   methods: {
     checkPasswordStrength() {
       const result = zxcvbn(this.password);
-      const score = result.score;
+      this.score = result.score;
+      
 
       const strengthMap = {
         0: { text: "Muito Fraca", class: "weak" },
@@ -73,8 +75,8 @@ export default {
         4: { text: "Muito Forte", class: "very-strong" },
       };
 
-      this.passwordStrengthText = strengthMap[score].text;
-      this.passwordStrengthClass = strengthMap[score].class;
+      this.passwordStrengthText = strengthMap[this.score].text;
+      this.passwordStrengthClass = strengthMap[this.score].class;
     },
 
     async register() {
@@ -83,6 +85,11 @@ export default {
 
       if (this.password !== this.confirmPassword) {
         this.errorMessage = "As senhas não coincidem.";
+        return;
+      }
+
+      if (this.score < 2) {
+        this.errorMessage = "Tente uma senha mais forte";
         return;
       }
 
