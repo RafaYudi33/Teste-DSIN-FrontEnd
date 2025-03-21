@@ -62,8 +62,6 @@ A aplicação estará disponível em `http://localhost:8080`. Entretanto as func
 
 <h2 id="telas">📱 Telas</h2>
 
-Descreva aqui as principais telas da sua aplicação e suas funcionalidades, como:
-
 - **Tela de Cadastro**: Permite que novos clientes criem uma conta no sistema.
 - **Tela de Login**: Tela para autenticação dos usuários.
 - **Dashboard do Cliente**: Página inicial após o login do cliente, mostrando os agendamentos futuros e opções para criar novos agendamentos, e editar agendamentos existentes.
