@@ -5,7 +5,7 @@
 <p align="center">
  <a href="#tecnologias">Tecnologias</a> • 
  <a href="#como-rodar">Como Rodar</a> • 
- <a href="#telas">Telas</a>
+ <a href="#telas">Telas</a> • 
  <a href="protecao-de-rotas-e-sessao-expirada">Proteção de Rotas e Sessão Expiradas</a>
 </p>
 
