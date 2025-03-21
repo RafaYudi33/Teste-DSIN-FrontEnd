@@ -83,7 +83,7 @@ A Tela de Cadastro é onde novos usuários podem criar uma conta para acessar o 
 - **Validações Implementadas**:
   - **Campos Vazios Não Permitidos**: Todos os campos devem ser preenchidos; campos vazios não são permitidos e o usuário receberá um alerta se tentar enviar o formulário incompleto.
   - **Senhas Idênticas**: O sistema verifica se a senha e a confirmação de senha são idênticas antes de permitir que o usuário prossiga com o cadastro.
-  - **Força da Senha**: A senha deve atender a critérios de média a forte segurança, incluindo o uso de letras maiúsculas, minúsculas, números e caracteres especiais.
+  - **Força da Senha**: A senha deve atender a critérios de média a forte segurança.
   - **Usuário Único**: Antes de submeter o formulário, o sistema verifica se o nome de usuário escolhido já existe na base de dados, garantindo que cada usuário tenha um identificador único.
   
 ### Feedback Visual
