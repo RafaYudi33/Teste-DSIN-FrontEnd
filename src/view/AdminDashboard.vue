@@ -1,30 +1,29 @@
 <template>
   <div class="page-container admin-dashboard">
-    <!-- Header -->
+   
     <header class="header">
-      <h1 class="salon">Beauty Leila Salon - Admin</h1>
+      <h1 class="salon">Beauty Leila Salon</h1>
       <div class="header-right">
         <div class="user-info">
           <p class="user-name">{{ adminName }}</p>
-          <p class="user-username">@{{ adminUsername }}</p>
+          <p class="user-username">admin @{{ adminUsername }}</p>
         </div>
         <button class="logout-btn" @click="logout">Sair</button>
       </div>
     </header>
 
-    <!-- Main Content -->
+    
     <main class="content">
       <div class="table-container">
         <div class="table-header">
-          <h2>Todos os agendamentos dos clientes</h2>
-          <button class="btn btn-primary" @click="openNewAppointmentDialog">Novo Agendamento</button>
+          <h2>Painel Admin - Agendamentos</h2>
+          <button class="btn btn-primary" @click="openPerformanceDialog">Desempenho Semanal</button>
         </div>
-
-        <AppointmentsTableAdmin @openEditDialog="openEditDialog" />
+        <AppointmentsTableAdmin />
       </div>
     </main>
 
-    <!-- Messages -->
+    
     <div v-if="showSuccessMessage" class="success-banner">
       Ação realizada com sucesso!
     </div>
@@ -33,30 +32,23 @@
       {{ errorMessage }}
     </div>
 
-    <!-- Modal de Novo Agendamento -->
-    <div v-if="showNewAppointmentDialog" class="modal">
+    
+    <div v-if="showPerformanceDialog" class="modal">
       <div class="modal-content">
-        <h2>Novo Agendamento</h2>
-
-        <label>Selecione os serviços:</label>
-        <div class="service-options">
-          <label v-for="service in services" :key="service.id" class="service-checkbox">
-            <input type="checkbox" :value="service.id" v-model="selectedServices" />
-            {{ service.name }} - R$ {{ service.price.toFixed(2) }} ({{ service.durationMinutes }} min)
-          </label>
+        <h2>Relatório de Desempenho Semanal</h2>
+        <div v-if="performanceData">
+          <table class="performance-table">
+            <tr v-for="(value, key) in performanceData" :key="key">
+              <td class="metric-name">{{ key.replace(/_/g, ' ') }}</td>
+              <td class="metric-value">{{ value }}</td>
+            </tr>
+          </table>
         </div>
-
-        <label for="appointment-date">Escolha a data e hora:</label>
-        <input type="datetime-local" v-model="appointmentDate" id="appointment-date" class="date-input" />
-
-        <div class="modal-actions">
-          <button class="btn btn-success" @click="createAppointment">Agendar</button>
-          <button class="btn btn-error" @click="closeNewAppointmentDialog">Cancelar</button>
-        </div>
+        <button class="btn btn-error" @click="closePerformanceDialog">Fechar</button>
       </div>
     </div>
 
-    <!-- Footer -->
+    
     <footer class="footer">
       <p>© 2025 Beauty Leila Salon - Todos os direitos reservados</p>
     </footer>
@@ -81,13 +73,11 @@ export default {
     return {
       adminName: localStorage.getItem("name") || "Administrador",
       adminUsername: localStorage.getItem("username") || "admin",
-      showNewAppointmentDialog: false,
+      showPerformanceDialog: false,
       showSuccessMessage: false,
       showErrorMessage: false,
       errorMessage: "",
-      selectedServices: [],
-      services: [],
-      appointmentDate: "",
+      performanceData: null, 
     };
   },
   methods: {
@@ -95,56 +85,27 @@ export default {
       localStorage.clear();
       this.$router.push("/");
     },
-    openNewAppointmentDialog() {
-      this.showNewAppointmentDialog = true;
-      this.fetchServices();
+    openPerformanceDialog() {
+      this.showPerformanceDialog = true;
+      this.fetchPerformanceData();
     },
-    closeNewAppointmentDialog() {
-      this.showNewAppointmentDialog = false;
-      this.selectedServices = [];
-      this.appointmentDate = "";
+    closePerformanceDialog() {
+      this.showPerformanceDialog = false;
     },
-    async fetchServices() {
+    async fetchPerformanceData() {
       try {
         const token = localStorage.getItem("authToken");
-        const response = await api.get("/beauty-services", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        this.services = response.data;
-      } catch (error) {
-        console.error("Erro ao buscar serviços:", error);
-      }
-    },
-    async createAppointment() {
-      if (!this.selectedServices.length || !this.appointmentDate) {
-        this.errorMessage = "Selecione pelo menos um serviço e escolha uma data!";
-        this.showErrorMessage = true;
-        setTimeout(() => {
-          this.showErrorMessage = false;
-        }, 3000);
-        return;
-      }
 
-      const appointmentData = {
-        clientId: localStorage.getItem("idUser"),
-        beautyServicesIds: this.selectedServices,
-        dateTime: this.appointmentDate,
-      };
-
-      try {
-        const token = localStorage.getItem("authToken");
-        await api.post("/appointment", appointmentData, {
+        const response = await api.get("/reports/last-week", {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        this.showSuccessMessage = true;
-        setTimeout(() => {
-          this.showSuccessMessage = false;
-        }, 3000);
+        this.performanceData = response.data; 
 
-        this.closeNewAppointmentDialog();
+
       } catch (error) {
-        this.errorMessage = error.response?.data?.message || "Erro ao criar agendamento.";
+        this.closePerformanceDialog();
+        this.errorMessage = "Erro ao gerar relatório semanal"
         this.showErrorMessage = true;
         setTimeout(() => {
           this.showErrorMessage = false;
@@ -157,7 +118,7 @@ export default {
 
 <style scoped>
 .admin-dashboard {
-  background: #F5F5F5;
+  background: #E0DCD9 !important;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -202,4 +163,25 @@ export default {
 .table-header .btn-primary:hover {
   background-color: #363636;
 }
+
+.performance-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.performance-table tr {
+  border-bottom: 1px solid #ddd;
+}
+
+.performance-table td {
+  padding: 10px;
+  text-align: left;
+}
+
+.metric-name {
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
 </style>

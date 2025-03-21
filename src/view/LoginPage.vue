@@ -1,13 +1,12 @@
 <template>
   <div class="flex-center">
-    <!-- Nome do salão atualizado -->
+   
     <h1 class="salon-name">Beauty Leila Salon</h1>
 
     <div class="login-wrapper">
-      <!-- Frase "Faça seu login" -->
+      
       <h2 class="login-title">Faça seu Login:</h2>
 
-      <!-- Card de Login -->
       <div class="login-container">
         <form @submit.prevent="login">
           <input type="text" v-model="username" placeholder="Nome de usuário" required />

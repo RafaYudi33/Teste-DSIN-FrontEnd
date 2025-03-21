@@ -1,4 +1,4 @@
-/* 🔥 Estilização Padrão dos Modais */
+
 .modal {
   position: fixed;
   top: 0;
@@ -11,7 +11,7 @@
   align-items: center;
 }
 
-/* 🔥 Caixa do modal */
+
 .modal-content {
   background: white;
   padding: 20px;
@@ -21,7 +21,7 @@
   width: 420px;
 }
 
-/* 🔥 Ajustes específicos para Novo Agendamento */
+
 .modal-content label {
   font-size: 14px;
   font-weight: bold;
@@ -30,7 +30,7 @@
   margin-bottom: 5px;
 }
 
-/* 🔥 Estilização das opções de serviço */
+
 .service-options {
   display: flex;
   flex-direction: column;
@@ -47,7 +47,7 @@
   font-size: 14px;
 }
 
-/* 🔥 Ajuste no input de data */
+
 .date-input {
   width: 100%;
   padding: 10px;
@@ -63,7 +63,7 @@
   border-color: #620C18;
 }
 
-/* 🔥 Ajuste nos botões dentro do modal */
+
 .modal-actions {
   display: flex;
   justify-content: space-between;

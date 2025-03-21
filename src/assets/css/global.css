@@ -8,14 +8,14 @@
   font-family: "Roboto", sans-serif;
 }
 
-/* Fundo da página */
+
 body {
   background: linear-gradient(to bottom, #620C18 50%, #E0DCD9 50%);
   min-height: 100vh;
   color: #4A4A4A;
 }
 
-/* Centralização flexível */
+
 .flex-center {
   display: flex;
   justify-content: center;
@@ -23,12 +23,12 @@ body {
   height: 100vh;
 }
 
-/* Nome do salão */
+
 .salon-name {
   font-family: "Playfair Display", serif;
   position: absolute;
   text-transform: none;
-  top: 30px;
+  top: 10px;
   font-size: 40px;
   font-weight: bold;
   color:white;
@@ -36,11 +36,6 @@ body {
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
 
-/* ============================== */
-/*        BOTÕES GLOBAIS         */
-/* ============================== */
-
-/* Estilo base para todos os botões */
 .btn {
   display: inline-block;
   width: 100%;
@@ -55,7 +50,7 @@ body {
   transition: 0.3s ease-in-out;
 }
 
-/* Botão Primário */
+
 .btn-primary {
   background-color: #620C18;
   color: white;
@@ -65,7 +60,7 @@ body {
   background-color: #500A14;
 }
 
-/* Botão Secundário */
+
 .btn-secondary {
   background-color: #C6AD95;
   color: white;
@@ -75,7 +70,7 @@ body {
   background-color: #A58C74;
 }
 
-/* Botão de Erro */
+
 .btn-error {
   background-color: #E63946;
   color: white;
@@ -85,7 +80,7 @@ body {
   background-color: #C62828;
 }
 
-/* Botão Desabilitado */
+
 .btn-disabled {
   background-color: #CCCCCC;
   color: #666666;

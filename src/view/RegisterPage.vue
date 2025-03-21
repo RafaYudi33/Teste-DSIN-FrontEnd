@@ -1,20 +1,20 @@
 <template>
   <div class="flex-center">
-    <!-- Nome do salão atualizado -->
+    
     <h1 class="salon-name">Beauty Leila Salon</h1>
 
     <div class="register-wrapper">
-      <!-- Frase "Crie sua conta" -->
+      
       <h2 class="register-title">Crie sua conta:</h2>
 
-      <!-- Card de Cadastro -->
+      
       <div class="register-container">
         <form @submit.prevent="register">
           <input type="text" v-model="name" placeholder="Nome Completo" required />
           <input type="text" v-model="username" placeholder="Nome de Usuário" required />
           <input type="password" v-model="password" placeholder="Senha" @input="checkPasswordStrength" required />
           
-          <!-- Indicador de força da senha -->
+          
           <div class="password-strength">
             <div class="strength-bar" :class="passwordStrengthClass"></div>
             <p class="strength-text">{{ passwordStrengthText }}</p>
@@ -24,12 +24,12 @@
           <button type="submit" class="btn btn-primary">CADASTRAR</button>
         </form>
 
-        <!-- Mensagem de sucesso -->
+       
         <transition name="fade">
           <p v-if="successMessage" class="success">{{ successMessage }}</p>
         </transition>
 
-        <!-- Mensagem de erro -->
+       
         <transition name="fade">
           <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
         </transition>
@@ -45,7 +45,7 @@
 
 <script>
 import api from "@/services/api";
-import zxcvbn from "zxcvbn"; // Importação da lib de força de senha
+import zxcvbn from "zxcvbn";
 
 export default {
   data() {
@@ -54,10 +54,10 @@ export default {
       username: "",
       password: "",
       confirmPassword: "",
-      successMessage: "", // Mensagem de sucesso
-      errorMessage: "", // Mensagem de erro
-      passwordStrengthText: "", // Texto da força da senha
-      passwordStrengthClass: "", // Classe para a barra de força
+      successMessage: "", 
+      errorMessage: "",
+      passwordStrengthText: "", 
+      passwordStrengthClass: "", 
     };
   },
   methods: {
@@ -95,10 +95,10 @@ export default {
 
         console.log("Cadastro realizado com sucesso:", response.data);
 
-        // Atualiza a mensagem de sucesso e força o Vue a detectar a mudança
+       
         this.successMessage = "Cadastro realizado com sucesso! Redirecionando...";
 
-        // Aguarda 3 segundos antes de redirecionar para o login
+        
         setTimeout(() => {
           this.$router.push("/");
         }, 3000);
@@ -118,7 +118,7 @@ export default {
 <style scoped>
 @import "../assets/css/register.css";
 
-/* Mensagem de sucesso */
+
 .success {
   color: #28a745;
   font-size: 14px;
@@ -127,7 +127,7 @@ export default {
   text-align: center;
 }
 
-/* Mensagem de erro */
+
 .error {
   color: #E63946;
   font-size: 14px;
@@ -136,7 +136,7 @@ export default {
   text-align: center;
 }
 
-/* Estilo do indicador de força da senha */
+
 .password-strength {
   margin-top: 8px;
 }
@@ -148,7 +148,7 @@ export default {
   transition: width 0.3s ease-in-out;
 }
 
-/* Cores da força da senha */
+
 .weak {
   background-color: #e74c3c;
   width: 25%;
@@ -169,7 +169,7 @@ export default {
   width: 100%;
 }
 
-/* Texto do nível da senha */
+
 .strength-text {
   font-size: 14px;
   margin-top: 5px;
@@ -178,7 +178,6 @@ export default {
   color: #4a4a4a;
 }
 
-/* Animação para exibir mensagens de erro/sucesso */
 .fade-enter-active, .fade-leave-active {
   transition: opacity 0.5s;
 }

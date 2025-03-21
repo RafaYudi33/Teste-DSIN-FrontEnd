@@ -18,6 +18,7 @@
         <div class="table-header">
           <h2>Seus Agendamentos</h2>
           <button class="btn btn-primary" @click="openNewAppointmentDialog">Novo Agendamento</button>
+          
         </div>
 
         <AppointmentsTable @openEditDialog="openEditDialog" />
@@ -34,7 +35,11 @@
       {{ errorMessage }}
     </div>
 
-    <!-- Dialog de Novo Agendamento -->
+    <div v-if="showSuggestionMessage" class="warning-banner">
+      {{ suggestionMessage }}
+    </div>
+
+    
     <div v-if="showNewAppointmentDialog" class="modal">
       <div class="modal-content">
         <h2>Novo Agendamento</h2>
@@ -57,7 +62,7 @@
       </div>
     </div>
 
-    <!-- Footer -->
+    
     <footer class="footer">
       <p>© 2025 Beauty Leila Salon - Todos os direitos reservados</p>
     </footer>
@@ -71,6 +76,7 @@ import "@/assets/css/header.css";
 import "@/assets/css/footer.css";
 import "@/assets/css/success-banner.css";
 import "@/assets/css/error-banner.css";
+import "@/assets/css/warning-banner.css"; 
 import "@/assets/css/modal.css"; 
 
 export default {
@@ -83,9 +89,13 @@ export default {
       clientName: localStorage.getItem("name") || "Cliente",
       clientUsername: localStorage.getItem("username") || "usuario",
       showNewAppointmentDialog: false,
+      showSuggestionMessage: false,
+      suggestionMessage: "",
       showEditDialog: false,
       showSuccessMessage: false,
+      suggestedAppointment: {},
       showErrorMessage: false,
+      hasSeenSuggestion: false,
       errorMessage: "",
       selectedAppointment: {},
       services: [],
@@ -98,15 +108,23 @@ export default {
       localStorage.clear();
       this.$router.push("/");
     },
+
+
     openNewAppointmentDialog() {
+      this.hasSeenSuggestion = false;
       this.showNewAppointmentDialog = true;
       this.fetchServices();
     },
+
+
     closeNewAppointmentDialog() {
+      this.hasSeenSuggestion = false;
       this.showNewAppointmentDialog = false;
       this.selectedServices = [];
       this.appointmentDate = "";
     },
+
+
     async fetchServices() {
       try {
         const token = localStorage.getItem("authToken");
@@ -118,48 +136,91 @@ export default {
         console.error("Erro ao buscar serviços:", error);
       }
     },
+
     async createAppointment() {
       if (!this.selectedServices.length || !this.appointmentDate) {
         this.errorMessage = "Selecione pelo menos um serviço e escolha uma data!";
         this.showErrorMessage = true;
         setTimeout(() => {
           this.showErrorMessage = false;
-        }, 3000);
+        }, 6000);
         return;
       }
 
-      const appointmentData = {
-        clientId: localStorage.getItem("idUser"),
-        beautyServicesIds: this.selectedServices,
-        dateTime: this.appointmentDate,
-      };
+      const token = localStorage.getItem("authToken");
+      const userId = localStorage.getItem("idUser");
 
       try {
-        const token = localStorage.getItem("authToken");
+        const response = await api.get(`/appointment?id=${userId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        const userAppointments = response.data;
+
+        const selectedDate = new Date(this.appointmentDate);
+        const weekStart = new Date(selectedDate);
+        weekStart.setDate(weekStart.getDate() - weekStart.getDay()); 
+
+        const weekEnd = new Date(weekStart);
+        weekEnd.setDate(weekEnd.getDate() + 6); 
+
+        const existingAppointment = userAppointments.find(appointment => {
+          const appointmentDate = new Date(appointment.dateTime);
+          return appointmentDate >= weekStart && appointmentDate <= weekEnd;
+        });
+
+        if (existingAppointment && !this.hasSeenSuggestion) {
+          this.hasSeenSuggestion = true;
+          this.showSuggestionMessage = true;
+
+          const formattedDate = new Intl.DateTimeFormat("pt-BR", {
+            weekday: "long",
+            day: "2-digit",
+            month: "long",
+            hour: "2-digit",
+            minute: "2-digit",
+          }).format(new Date(existingAppointment.dateTime));
+
+          this.suggestedAppointment = existingAppointment;
+          
+          this.suggestionMessage = `Ops, verifiquei que você já tem um agendamento para ${formattedDate}. 
+          Se preferir, volte ao painel, edite o agendamento e adicione os serviços desejados.`;
+
+        setTimeout(() => {
+          this.showSuggestionMessage = false
+        }, 10000);
+
+         
+          return;
+        }
+
+        const appointmentData = {
+          clientId: userId,
+          beautyServicesIds: this.selectedServices,
+          dateTime: this.appointmentDate,
+        };
+
         await api.post("/appointment", appointmentData, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
+        
+        this.successMessage = "Agendamento realizado com sucesso!";
         this.showSuccessMessage = true;
+        
         setTimeout(() => {
           this.showSuccessMessage = false;
+          window.location.reload();
         }, 3000);
 
         this.closeNewAppointmentDialog();
-
-        setTimeout(() => {
-            window.location.reload(); // 🔥 Recarrega a página após sucesso
-        }, 1500);
-
       } catch (error) {
         if (error.response && error.response.data) {
           const responseData = error.response.data;
 
           if (responseData.message === "Validation error" && responseData.errors?.dateTime) {
             this.errorMessage = "Não é permitido selecionar datas passadas!";
-          } 
-         
-          else {
+          } else {
             this.errorMessage = responseData.message || "Erro ao criar agendamento. Tente novamente.";
           }
         } else {
@@ -225,4 +286,5 @@ export default {
 .table-header .btn-primary:hover {
   background-color: #363636;
 }
+
 </style>

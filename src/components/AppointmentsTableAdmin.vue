@@ -5,9 +5,9 @@
       :rows="appointments"
       :pagination-options="{
         enabled: true,
-        perPage: 10,
+        perPage: 5,
         position: 'bottom',
-        perPageDropdown: [10, 20, 30],
+        perPageDropdown: [5, 10],
       }"
       styleClass="vgt-table"
     >
@@ -26,17 +26,15 @@
       </template>
     </vue-good-table>
 
-    <!-- 🔥 Banner de Sucesso -->
     <div v-if="showSuccessMessage" class="success-banner">
       {{ successMessage }}
     </div>
 
-    <!-- 🔥 Banner de Erro -->
     <div v-if="showErrorMessage" class="error-banner">
       {{ errorMessage }}
     </div>
 
-    <!-- Modal de Detalhes -->
+  
     <div v-if="showDetails" class="modal">
       <div class="modal-content">
         <h2>Detalhes do Agendamento</h2>
@@ -51,8 +49,6 @@
         <button class="btn btn-error" @click="closeDetails">Fechar</button>
       </div>
     </div>
-
-    <!-- Modal de Edição -->
     
     <div v-if="showEditDialog" class="modal">
       <div class="modal-content">
@@ -69,7 +65,7 @@
         <label for="appointment-date">Escolha a data e hora:</label>
         <input type="datetime-local" v-model="appointmentDate" id="appointment-date" class="date-input" />
 
-        <!-- Dropdown Customizado -->
+      
         <label>Status do agendamento:</label>
         <div class="dropdown">
           <button class="btn btn-status" @click="dropdownOpen = !dropdownOpen">
@@ -118,7 +114,7 @@ export default {
       services: [],
       selectedServices: [],
       appointmentDate: "",
-      selectedStatus: "", // Mantido para controle do dropdown
+      selectedStatus: "", 
       columns: [
         { label: "Cliente", field: "clientName" },
         { label: "Data", field: "dateTime", formatFn: this.formatDate },
@@ -284,7 +280,19 @@ export default {
     },
     formatDate(dateTime) {
       const date = new Date(dateTime);
-      return date.toLocaleDateString("pt-BR", { year: "numeric", month: "2-digit", day: "2-digit" });
+      const formattedDate = date.toLocaleDateString("pt-BR", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+      });
+
+      const formattedTime = date.toLocaleTimeString("pt-BR", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false
+      });
+
+      return `${formattedDate} ${formattedTime}`;
     },
   },
   mounted() {
@@ -296,25 +304,24 @@ export default {
 
 
 <style scoped>
-/* Tornando a tabela mais larga */
+
 .admin-table {
   max-width: 1000px;
   margin: 0 auto;
 }
 
-/* Botões alinhados */
 .action-buttons {
   display: flex;
   gap: 6px;
 }
 
-/* Estilização geral para botões pequenos */
+
 .btn-small {
   padding: 6px 14px;
   font-size: 13px;
 }
 
-/* Botão Editar */
+
 .btn-edit {
   background-color: #4A4A4A;
   color: white;
@@ -327,7 +334,7 @@ export default {
   background-color: #363636;
 }
 
-/* Botão Confirmar */
+
 .btn-success {
   background-color: #28a745;
   color: white;
@@ -350,7 +357,7 @@ export default {
   cursor: not-allowed;
 }
 
-/* 🔥 Estilização do Dropdown */
+
 .dropdown {
   position: relative;
   display: inline-block;

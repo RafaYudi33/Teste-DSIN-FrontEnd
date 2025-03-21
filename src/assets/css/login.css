@@ -1,4 +1,4 @@
-/* Envolvendo todo o bloco de login */
+
 .login-wrapper {
     display: flex;
     flex-direction: column;
@@ -7,7 +7,7 @@
   }
   
   
-  /* Frase "Faça seu login" */
+
   .login-title {
     font-size: 22px;
     font-weight: bold;
@@ -16,7 +16,7 @@
     margin-bottom: -5px;
   }
   
-  /* Container do Login */
+ 
   .login-container {
     width: 400px;
     padding: 40px;
@@ -26,7 +26,7 @@
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   }
   
-  /* Inputs */
+
   .login-container input {
     display: block;
     width: 100%;
@@ -45,19 +45,19 @@
     border-color: #620C18;
   }
   
-  /* Botão */
+ 
   .login-container button {
     margin-top: 15px;
   }
   
-  /* Texto de cadastro */
+  
   .register-text {
     margin-top: 15px;
     font-size: 14px;
     color: #4A4A4A;
   }
   
-  /* Link para cadastro */
+ 
   .register-link {
     color: #620C18;
     font-weight: bold;
@@ -69,7 +69,7 @@
     text-decoration: underline;
   }
   
-  /* Mensagem de Erro */
+  
   .error {
     color: #E63946;
     margin-top: 10px;

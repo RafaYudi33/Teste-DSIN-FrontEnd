@@ -7,7 +7,7 @@
           enabled: true,
           perPage: 5,
           position: 'bottom',
-          perPageDropdown: [5, 10, 15],
+          perPageDropdown: [5, 10],
         }"
         styleClass="vgt-table"
       >
@@ -19,17 +19,17 @@
         </template>
       </vue-good-table>
 
-      <!-- 🔥 Banner de Sucesso -->
+     
       <div v-if="showSuccessMessage" class="success-banner">
         Agendamento atualizado com sucesso!
       </div>
 
-      <!-- 🔥 Banner de Erro -->
+      
       <div v-if="showErrorMessage" class="error-banner">
         {{ errorMessage }}
       </div>
 
-      <!-- Modal de Detalhes -->
+     
       <div v-if="showDetails" class="modal">
         <div class="modal-content">
           <p><strong>Data:</strong> {{ formatDate(selectedAppointment.dateTime) }}</p>
@@ -43,7 +43,7 @@
         </div>
       </div>
 
-      <!-- Modal de Edição -->
+      
       <div v-if="showEditDialog" class="modal">
         <div class="modal-content">
           <h2>Editar Agendamento</h2>
@@ -157,11 +157,13 @@ export default {
     },
     async updateAppointment() {
       const token = localStorage.getItem("authToken");
+      const idUser = localStorage.getItem("idUser");      
 
       const updatedAppointment = {
         id: this.selectedAppointment.id,
         beautyServicesIds: this.selectedServices,
         dateTime: this.appointmentDate,
+        idClient: Number(idUser),
       };
 
       try {
@@ -179,7 +181,7 @@ export default {
       } catch (error) {
         if (error.response && error.response.data) {
           const responseData = error.response.data;
-
+          
           if (responseData.message === "Modificações só são permitidas em mais de 2 dias do agendamento") {
             this.errorMessage = "Você só pode editar agendamentos com pelo menos 2 dias de antecedência!";
           } else if (responseData.errors && responseData.errors.dateTime) {
@@ -199,7 +201,19 @@ export default {
     },
     formatDate(dateTime) {
       const date = new Date(dateTime);
-      return date.toLocaleDateString("pt-BR", { year: "numeric", month: "2-digit", day: "2-digit" });
+      const formattedDate = date.toLocaleDateString("pt-BR", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+      });
+
+      const formattedTime = date.toLocaleTimeString("pt-BR", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false
+      });
+
+      return `${formattedDate} ${formattedTime}`;
     },
   },
   mounted() {
@@ -209,19 +223,17 @@ export default {
 </script>
 
 <style scoped>
-/* Botões alinhados */
+
 .action-buttons {
   display: flex;
   gap: 6px;
 }
 
-/* Estilização geral para botões pequenos */
 .btn-small {
   padding: 6px 12px;
   font-size: 13px;
 }
 
-/* Botão Editar */
 .btn-edit {
   background-color: #4A4A4A;
   color: white;
