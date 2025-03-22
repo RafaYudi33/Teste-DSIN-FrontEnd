@@ -25,7 +25,7 @@
 <h2 id="como-rodar">🚀 Como Rodar</h2>
 
 ### Pré-requisitos
-
+- Vue 3 
 - Node.js instalado
 - Gerenciador de pacotes (npm ou yarn)
 
