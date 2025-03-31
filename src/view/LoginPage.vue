@@ -63,8 +63,11 @@ export default {
         }
 
       } catch (error) {
-        this.errorMessage = "Erro ao fazer login. Verifique suas credenciais.";
-        console.error("Erro no login:", error);
+        if (error.response && error.response.data && error.response.data.message) {
+          this.errorMessage = error.response.data.message;
+        } else {
+          this.errorMessage = "Erro ao fazer login. Tente novamente.";
+        }
       }
     },
   },
