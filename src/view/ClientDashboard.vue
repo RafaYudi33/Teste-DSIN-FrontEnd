@@ -218,8 +218,8 @@ export default {
         if (error.response && error.response.data) {
           const responseData = error.response.data;
 
-          if (responseData.message === "Validation error" && responseData.errors?.dateTime) {
-            this.errorMessage = "Não é permitido selecionar datas passadas!";
+          if (responseData.message === "Validation error" && responseData.errors.dateTime) {
+            this.errorMessage = responseData.errors.dateTime;
           } else {
             this.errorMessage = responseData.message || "Erro ao criar agendamento. Tente novamente.";
           }

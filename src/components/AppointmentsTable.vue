@@ -182,10 +182,10 @@ export default {
         if (error.response && error.response.data) {
           const responseData = error.response.data;
           
-          if (responseData.message === "Modificações só são permitidas em mais de 2 dias do agendamento") {
-            this.errorMessage = "Você só pode editar agendamentos com pelo menos 2 dias de antecedência!";
+          if (responseData.message === "Só é possivel editar agendamentos com pelo menos 2 dias de antecedência!") {
+            this.errorMessage = responseData.message;
           } else if (responseData.errors && responseData.errors.dateTime) {
-            this.errorMessage = "Não é permitido selecionar datas passadas!";
+            this.errorMessage = responseData.errors.dateTime;
           } else {
             this.errorMessage = "Erro ao atualizar agendamento. Tente novamente.";
           }
